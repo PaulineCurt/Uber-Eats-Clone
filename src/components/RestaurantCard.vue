@@ -8,16 +8,17 @@
     <div class="restaurant--informations">
       <div class="top">
         <p class="name">
-          Subway
+          {{ info_restaurant.name}}
         </p>
         <p class="note">
           <span>
-            4.5
+            {{ info_restaurant.note}}
           </span>
         </p>
       </div>
-      <p class="time">20-30 min</p>
-      <p class="price">€€</p>
+      <p class="time">
+        {{ info_restaurant.drive_time}}
+      </p>
     </div>
   </div>
 </template>
@@ -26,6 +27,9 @@
 <script>
 export default {
   name: "RestaurantCard",
+  props: {
+    info_restaurant: Object
+  }
 
 }
 </script>

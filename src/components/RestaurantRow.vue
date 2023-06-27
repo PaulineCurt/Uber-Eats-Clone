@@ -6,7 +6,7 @@
     <div class="wrapper--card">
     <!-- v-for permet de boucler dans le template -->
     <!-- infos = qu'est ce qu'on veux boucler, cb de fois in3 & la clé de la carte c'est l'index  -->
-    <restaurant-card v-for="(card, index) in 3" :key="index"/>
+    <restaurant-card v-for="(card, index) in three_restaurant" :info_restaurant="card" :key="index"/>
     </div>
   
   </div>
@@ -20,6 +20,9 @@ export default {
     name: "RestaurantRow",
     components: {
         RestaurantCard,
+    }, 
+    props: {
+        three_restaurant: Array
     }
 }
 </script>

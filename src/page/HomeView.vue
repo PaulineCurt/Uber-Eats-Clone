@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <RestaurantRow/>
+    <RestaurantRow v-for="(data, i) in data_restaurant" :key="i" :three_restaurant="data"/>
   </div>
 </template>
 
 <script>
 // IMPORT
 import BDD from '../BDD.js'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 // COMPONENTS
 import RestaurantRow from '../components/RestaurantRow'
 
@@ -28,10 +28,10 @@ export default {
         }
       }
       
-      let data_restaurant = []
+      let data_restaurant = ref([]);
 
       const makeDataRestaurant = () => { 
-        let three_restaurant = [];
+        let three_restaurant = []
 
         // boucle sur la BDD
         for(const restaurant of BDD) {
@@ -42,7 +42,7 @@ export default {
          if(three_restaurant.length == 2) {
           // a chaque tour de boucle on push dans le tableau three_restaurant
           three_restaurant.push(new_restaurant);
-          data_restaurant.push(three_restaurant);
+          data_restaurant.value.push(three_restaurant);
           three_restaurant = [];
          } else {
           three_restaurant.push(new_restaurant);
@@ -50,6 +50,11 @@ export default {
         }
       }
       onMounted(makeDataRestaurant);
+
+      // Retourne le tableau data_restaurant dans le setup
+      return {
+        data_restaurant,
+      }
     },
 }
 </script>
