@@ -1,9 +1,8 @@
 <!-- .vue fichier créer pas l'ide  -->
 <!-- html -->
 <template>
-  <div class="restaurant--card">
-    <div class="restaurant--image">
-
+  <div  class="restaurant--card">
+    <div :style="changeBackground" class="restaurant--image">
     </div>
     <div class="restaurant--informations">
       <div class="top">
@@ -25,12 +24,24 @@
 
 <!-- JavaScript -->
 <script>
+// import
+import { computed } from 'vue';
 export default {
   name: "RestaurantCard",
   props: {
-    info_restaurant: Object
+    info_restaurant: Object,
+  },
+  setup(props) {
+    const changeBackground = computed(() => {
+      return {
+        backgroundImage: `url(${props.info_restaurant.image})`
+      }
+    })
+    //return
+    return {
+      changeBackground
+    }
   }
-
 }
 </script>
 
