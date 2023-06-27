@@ -1,5 +1,10 @@
 <template>
   <div class="home">
+    <div class="header">
+      <img src="https://d3i4yxtzktqr9n.cloudfront.net/web-eats-v2/ee037401cb5d31b23cf780808ee4ec1f.svg" alt="" srcset="">
+      <input type="text" placeholder="De quoi avez vous envie?">
+    </div>
+    <div class="banner"></div>
     <RestaurantRow v-for="(data, i) in data_restaurant" :key="i" :three_restaurant="data"/>
   </div>
 </template>
@@ -59,6 +64,33 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.home {
+  .header {
+    display: flex;
+    height: 101px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      width: 200px;
+    }
+    input {
+      background-color: #f6f6f6;
+      border: none;
+      height: 60px;
+      width: 400px;
+      outline: none;
+      padding-left: 20px;
+    }
+  }
+  .banner {
+    height: 200px;
+    width: 100%;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/37d1c792897985.5e584e035a037.png') ;
+    background-size: cover;
+    background-position: center;
+  }
+}
 
 </style>
