@@ -10,7 +10,7 @@ import RestaurantView from './page/RestaurantView.vue'
 // gère les routes
 const routes = [
     { path: '/', component: Home },
-    { path: '/restaurant', component: RestaurantView},
+    { name: 'Restaurant', path: '/restaurant/:name', component: RestaurantView},
 ]
 
 const routeur = createRouter({

@@ -48,7 +48,7 @@ export default {
 <!-- CSS -->
 <style lang="scss">
 .restaurant--card {
-    width: 32%;
+    width: 100%;
     height: 30vh;
     p {
       margin: 0px;

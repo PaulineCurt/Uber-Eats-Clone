@@ -8,8 +8,11 @@
       <input v-model="user_search_restaurant" type="text" placeholder="De quoi avez vous envie?">
         <div class="search">
           <!-- link to path -->
-          <router-link to="/restaurant">
-            <div v-for="(restaurant, i) in search_restaurant" :key="i" class="container--restaurant--search">
+          <!-- name = nom du composant
+            params prend un objet avec plusieur params 'name''test' 
+            name = le slug dans le path -->
+          <router-link v-for="(restaurant, i) in search_restaurant" :key="i" :to="{name: 'Restaurant', params: {name: restaurant.name }}">
+            <div class="container--restaurant--search">
             <div class="wrapper--img">
               <img :src="restaurant.image" alt="">
             </div>
