@@ -2,9 +2,19 @@
   <div class="home">
     <div class="header">
       <img src="https://d3i4yxtzktqr9n.cloudfront.net/web-eats-v2/ee037401cb5d31b23cf780808ee4ec1f.svg" alt="" srcset="">
-      <!-- V-model permet de lier la valeur de ce que l'utilisateur 
+      <div class="wrapper--input">
+     <!-- V-model permet de lier la valeur de ce que l'utilisateur 
       inscrit dans l'input, grace à la variable "search_restaurant" -->
       <input v-model="user_search_restaurant" type="text" placeholder="De quoi avez vous envie?">
+        <div class="search">
+          <div v-for="(restaurant, i) in search_restaurant" :key="i" class="container--restaurant--search">
+            <div class="wrapper--img">
+              <img :src="restaurant.image" alt="">
+            </div>
+            <p>{{ restaurant.name }}</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="banner"></div>
     <RestaurantRow v-for="(data, i) in data_restaurant" :key="i" :three_restaurant="data"/>
@@ -60,22 +70,29 @@ export default {
       }
 
       //User search restaurant 
+      // ref => immutable / dynamique
       let user_search_restaurant = ref('');
+      let search_restaurant = ref([]);
       // Dés qu'une valeur d'une ref change on lance une fonction
       // 1er param => user_search_restaurant <= la variable à "regarder" (watch)
       // 2eme param => fonction param => new_value
       watch(user_search_restaurant, (new_value) => {
         // créer un regex (loi de comparasion de chaine de caractère)
         // loi de comparaison => new_value
-        // En ajoutant le drapeau "i" lors de la création de l'expression régulière, la recherche sera insensible à la casse. (ignore si c'est maj ou min)
+        // i pour la casse de la string 
         let regex = RegExp(new_value, "i");
         
-        
+
         // test les chaines de caractères
         // test => permet de tester la regex
         // on passe le nom des restaurants en chaine de caractères à tester
-        let search_restaurant= all_restaurant.filter(restaurant => regex.test(restaurant.name));
-        console.log(search_restaurant);
+        //toLowerCase min ou maj 
+        let new_search_restaurant= all_restaurant.filter(restaurant => regex.test(restaurant.name));
+
+        // Si new_value == 0 true "?" renvoie tableau vide
+        // sinon ":" renvoi tableau plein
+        new_value == 0 ? search_restaurant.value = [] : search_restaurant.value = new_search_restaurant;
+  
       })
       //
       onMounted(makeDataRestaurant);
@@ -83,7 +100,8 @@ export default {
       // Retourne le tableau data_restaurant dans le setup
       return {
         data_restaurant,
-        user_search_restaurant
+        user_search_restaurant,
+        search_restaurant
       }
     },
 }
@@ -97,17 +115,51 @@ export default {
     width: 100%;
     align-items: center;
     justify-content: space-between;
+
     img {
       width: 200px;
     }
-    input {
-      background-color: #f6f6f6;
-      border: none;
-      height: 60px;
-      width: 400px;
-      outline: none;
-      padding-left: 20px;
+
+    .wrapper--input {
+      position: relative;
+        input {
+        background-color: #f6f6f6;
+        border: none;
+        height: 60px;
+        width: 400px;
+        outline: none;
+        padding-left: 20px;
+      }
+      .search {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        background-color: #fff;
+
+        .container--restaurant--search {
+          display: flex;
+          align-items: center;
+          padding: 10px;
+
+          &:hover {
+            background-color: #f6f6f6;
+          }
+
+          .wrapper--img {
+            height: 60px;
+            width: 60px;
+            margin-right: 25px;
+            border-radius: 50%;
+            overflow: hidden;
+          }
+          img {
+            height: 100%;
+            width: auto;
+          }
+        }
+      }
     }
+  
   }
   .banner {
     height: 200px;
