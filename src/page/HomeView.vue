@@ -1,7 +1,13 @@
 <template>
   <div class="home">
     <div class="header">
-      <img src="https://d3i4yxtzktqr9n.cloudfront.net/web-eats-v2/ee037401cb5d31b23cf780808ee4ec1f.svg" alt="" srcset="">
+      <img class="logo" src="https://d3i4yxtzktqr9n.cloudfront.net/web-eats-v2/ee037401cb5d31b23cf780808ee4ec1f.svg" alt="" srcset="">
+      
+            <img class="logo-speciality" src="../assets/speciality/fast-food.png" alt="">
+            <img class="logo-speciality" src="../assets/speciality/asiatique.png" alt="">
+            <img class="logo-speciality" src="../assets/speciality/pizza.png" alt="">
+            <img class="logo-speciality" src="../assets/speciality/tacos.png" alt="">
+            <img class="logo-speciality" src="../assets/speciality/france.png" alt="">
       <div class="wrapper--input">
      <!-- V-model permet de lier la valeur de ce que l'utilisateur 
       inscrit dans l'input, grace à la variable "search_restaurant" -->
@@ -11,7 +17,7 @@
           <!-- name = nom du composant
             params prend un objet avec plusieur params 'name''test' 
             name = le slug dans le path -->
-          <router-link v-for="(restaurant, i) in search_restaurant" :key="i" :to="{name: 'Restaurant', params: {name: restaurant.name }}">
+          <router-link v-for="(restaurant, i) in search_restaurant" :key="i" :to="{name: 'Restaurant', params: {name: restaurant.name, type: restaurant.type}}">
             <div class="container--restaurant--search">
             <div class="wrapper--img">
               <img :src="restaurant.image" alt="">
@@ -42,12 +48,16 @@ export default {
     // gère le js
     setup(){
       class Restaurant {
-        constructor (name, note, image, drive_time) {
+        constructor (name, note, image, drive_time, price, type, location, description) {
           //déclare les arguments
           this.name = name
           this.note = note
           this.image = image
           this.drive_time = drive_time
+          this.price = price
+          this.type = type
+          this.location = location
+          this.description = description
         }
       }
       // ref => rend la variable imutable (qd elle change toutes les variables liées change avec)
@@ -61,7 +71,7 @@ export default {
         // boucle sur la BDD
         for(const restaurant of BDD) {
           // Sur chaque objet on crée un nouveau restaurant avec toutes les propriétés
-          const new_restaurant = new Restaurant(restaurant.name, restaurant.note, restaurant.image, restaurant.drive_time)
+          const new_restaurant = new Restaurant(restaurant.name, restaurant.note, restaurant.image, restaurant.drive_time, restaurant.price, restaurant.type, restaurant.location, restaurant.description)
           // Tableau qui récupère tous les restaurants
           all_restaurant.push(new_restaurant);
          if(three_restaurant.length == 2) {
@@ -73,6 +83,7 @@ export default {
           three_restaurant.push(new_restaurant);
          }
         }
+        console.log(all_restaurant);
       }
 
       //User search restaurant 
@@ -87,19 +98,21 @@ export default {
         // loi de comparaison => new_value
         // i pour la casse de la string 
         let regex = RegExp(new_value, "i");
-        
-
+      
         // test les chaines de caractères
         // test => permet de tester la regex
         // on passe le nom des restaurants en chaine de caractères à tester
         //toLowerCase min ou maj 
-        let new_search_restaurant= all_restaurant.filter(restaurant => regex.test(restaurant.name));
+        let new_search_restaurant = all_restaurant.filter(restaurant => regex.test(restaurant.name) || regex.test(restaurant.type));
 
         // Si new_value == 0 true "?" renvoie tableau vide
         // sinon ":" renvoi tableau plein
         new_value == 0 ? search_restaurant.value = [] : search_restaurant.value = new_search_restaurant;
-  
-      })
+      });
+
+
+
+
       //
       onMounted(makeDataRestaurant);
 
@@ -122,9 +135,12 @@ export default {
     align-items: center;
     justify-content: space-between;
 
-    img {
+    .logo {
       width: 200px;
     }
+      .logo-speciality  {
+          width: 50px;
+      }
 
     .wrapper--input {
       position: relative;
@@ -165,8 +181,8 @@ export default {
         }
       }
     }
-  
   }
+  
   .banner {
     height: 200px;
     width: 100%;

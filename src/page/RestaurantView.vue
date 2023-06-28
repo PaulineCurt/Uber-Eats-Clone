@@ -2,13 +2,16 @@
   <router-link to="/">
   <div id="return">Retour à l'accueil</div>
 </router-link>
-  <div>
-    <!-- ":" contenu dynamique -->
+  <div class="restaurant--page">
+    <!-- ":" rends le contenu dynamique -->
     <img :src="restaurant.image" alt="">
+    <div class="restaurant--page--infos">
+       <p>{{ restaurant.name }}</p>
+       <p>Note du restaurant: {{ restaurant.note }}</p>
+       <p>Temps de livraison: {{ restaurant.drive_time }}</p>
+    </div>
+ 
   </div>
-  <p>{{ restaurant.name }}</p>
-  <p>Note du restaurant: {{ restaurant.note }}</p>
-  <p>Temps de livraison: {{ restaurant.drive_time }}</p>
 </template>
 
 <script>
@@ -16,16 +19,24 @@ import BDD from '../BDD'
 import { useRoute } from 'vue-router'
 
 export default {
-    name: 'RestaurantView',
-    setup(){
-      const route = useRoute()
-      const restaurant = BDD.find((restaurant) => restaurant.name === route.params.name)
+  name: 'RestaurantView',
+  setup() {
+    const route = useRoute()
 
-      return {
-        restaurant
-      }
+    let restaurant = null
+
+    if (route.params.name) {
+      restaurant = BDD.find((restaurant) => restaurant.name === route.params.name)
+    } else if (route.params.type) {
+      restaurant = BDD.find((restaurant) => restaurant.type === route.params.type)
     }
+
+    return {
+      restaurant
+    }
+  }
 }
+
 </script>
 
 <!-- scoped permet de contenir le CSS sur cette page uniquement -->
@@ -41,6 +52,12 @@ export default {
   &:hover {
     font-size: 30px;
     font-weight: 900;
+  }
+}
+.restaurant--page {
+  display: flex;
+  img {
+    width: 50%;
   }
 }
 </style>

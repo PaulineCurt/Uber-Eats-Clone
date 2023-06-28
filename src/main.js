@@ -9,8 +9,18 @@ import RestaurantView from './page/RestaurantView.vue'
 
 // gère les routes
 const routes = [
-    { path: '/', component: Home },
-    { name: 'Restaurant', path: '/restaurant/:name', component: RestaurantView},
+    { 
+        path: '/', 
+        component: Home 
+    },
+    {   name: 'Restaurant', 
+        path: '/restaurant/:name', 
+        component: RestaurantView},
+    {
+        name: 'RestaurantByType',
+        path: '/restaurant/type/:type',
+        component: RestaurantView
+      },
 ]
 
 const routeur = createRouter({

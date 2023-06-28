@@ -16,7 +16,11 @@
         </p>
       </div>
       <p class="time">
+        <img src="../assets/fast-food.png" alt="">
         {{ info_restaurant.drive_time}}
+      </p>
+      <p class="price">
+        {{ info_restaurant.price }}
       </p>
     </div>
   </div>
@@ -79,6 +83,13 @@ export default {
       }
       .time, .price {
         font-size: 0.9rem;
+        align-items: center;
+        display: flex;
+        gap: 5px;
+        img {
+          width: 8%;
+          margin-bottom: 1%;
+        }
       }
     }
      
