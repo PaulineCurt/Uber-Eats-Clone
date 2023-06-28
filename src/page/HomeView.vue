@@ -7,12 +7,15 @@
       inscrit dans l'input, grace à la variable "search_restaurant" -->
       <input v-model="user_search_restaurant" type="text" placeholder="De quoi avez vous envie?">
         <div class="search">
-          <div v-for="(restaurant, i) in search_restaurant" :key="i" class="container--restaurant--search">
+          <!-- link to path -->
+          <router-link to="/restaurant">
+            <div v-for="(restaurant, i) in search_restaurant" :key="i" class="container--restaurant--search">
             <div class="wrapper--img">
               <img :src="restaurant.image" alt="">
             </div>
             <p>{{ restaurant.name }}</p>
-          </div>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
